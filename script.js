@@ -5,7 +5,8 @@ const txtDescription = document.querySelector("#txtDescription")
 const txtDate = document.querySelector("#txtDate")
 const imgThumb = document.querySelector("#imgThumb")
 
-
+btnCheck.disabled = true
+btnCheck.value = "Cargando..."
 Promise.all([
   faceapi.nets.faceRecognitionNet.loadFromUri('/logface/models'),
   faceapi.nets.faceLandmark68Net.loadFromUri('/logface/models'),
@@ -20,7 +21,8 @@ async function start() {
   const labeledFaceDescriptors = await loadLabeledImages()
   const faceMatcher = new faceapi.FaceMatcher(labeledFaceDescriptors, 0.6)
   let canvas
-  alert("Listo")
+  btnCheck.disabled = false
+  btnCheck.value = "Check"
   btnCheck.addEventListener('click', async () => {
     canvas = faceapi.createCanvasFromMedia(document.querySelector("#video"))
     const detections = await faceapi.detectAllFaces(canvas).withFaceLandmarks().withFaceDescriptors()
