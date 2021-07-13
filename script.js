@@ -8,9 +8,9 @@ const imgThumb = document.querySelector("#imgThumb")
 btnCheck.disabled = true
 btnCheck.value = "Cargando..."
 Promise.all([
-  faceapi.nets.faceRecognitionNet.loadFromUri('/logface/models'),
-  faceapi.nets.faceLandmark68Net.loadFromUri('/logface/models'),
-  faceapi.nets.ssdMobilenetv1.loadFromUri('/logface/models')
+  faceapi.nets.faceRecognitionNet.loadFromUri('/models'),
+  faceapi.nets.faceLandmark68Net.loadFromUri('/models'),
+  faceapi.nets.ssdMobilenetv1.loadFromUri('/models')
 ]).then(start)
 
 
@@ -51,7 +51,7 @@ async function start() {
 }
 
 async function loadLabeledImages() {
-  const labels = ['Black Widow', 'Captain America', 'Captain Marvel', 'Fazur', 'Hawkeye', 'Jim Rhodes', 'Thor', 'Tony Stark']
+  const labels = ['Aditazar Ponce', 'Black Widow', 'Captain America', 'Captain Marvel', 'Fazur', 'Hawkeye', 'Jim Rhodes', 'Thor', 'Tony Stark']
   return Promise.all(
     labels.map(async label => {
       const descriptions = []
