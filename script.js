@@ -7,9 +7,9 @@ const imgThumb = document.querySelector("#imgThumb")
 
 
 Promise.all([
-  faceapi.nets.faceRecognitionNet.loadFromUri('/models'),
-  faceapi.nets.faceLandmark68Net.loadFromUri('/models'),
-  faceapi.nets.ssdMobilenetv1.loadFromUri('/models')
+  faceapi.nets.faceRecognitionNet.loadFromUri('/logface/models'),
+  faceapi.nets.faceLandmark68Net.loadFromUri('/logface/models'),
+  faceapi.nets.ssdMobilenetv1.loadFromUri('/logface/models')
 ]).then(start)
 
 
