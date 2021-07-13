@@ -4,6 +4,7 @@ const txtUsername = document.querySelector("#txtUsername")
 const txtDescription = document.querySelector("#txtDescription")
 const txtDate = document.querySelector("#txtDate")
 const imgThumb = document.querySelector("#imgThumb")
+  
 
 Promise.all([
   faceapi.nets.faceRecognitionNet.loadFromUri('/models'),
