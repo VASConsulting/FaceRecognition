@@ -28,13 +28,13 @@ async function start() {
     const resizedDetections = faceapi.resizeResults(detections, displaySize)
     const results = resizedDetections.map(d => faceMatcher.findBestMatch(d.descriptor))
     if (results[0].label != "unknown") {
-      window.speechSynthesis.speak(speech)
       speech.text = "Acceso permitido, bienvenido, " + results[0].label
       imgThumb.src = `labeled_images/${results[0].label}/1.jpg`
       txtName.innerHTML = results[0].label
       txtUsername.innerHTML = "@" + results[0].label
       txtDescription.innerHTML = "Empleado de sistemas"
       txtDate.innerHTML = new Date()
+      window.speechSynthesis.speak(speech)
     } else {
       speech.text = "Acceso denegado"
       imgThumb.src = "https://bulma.io/images/placeholders/96x96.png"
