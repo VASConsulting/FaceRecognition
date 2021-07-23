@@ -10,7 +10,9 @@ btnCheck.value = "Cargando..."
 Promise.all([
   faceapi.nets.faceRecognitionNet.loadFromUri('/models'),
   faceapi.nets.faceLandmark68Net.loadFromUri('/models'),
-  faceapi.nets.ssdMobilenetv1.loadFromUri('/models')
+  faceapi.nets.ssdMobilenetv1.loadFromUri('/models'),
+  faceapi.nets.tinyFaceDetector.loadFromUri('/models'),
+  faceapi.nets.faceExpressionNet.loadFromUri('/models')
 ]).then(start)
 
 
@@ -25,7 +27,7 @@ async function start() {
   btnCheck.value = "Check"
   btnCheck.addEventListener('click', async () => {
     canvas = faceapi.createCanvasFromMedia(document.querySelector("#video"))
-    const detections = await faceapi.detectAllFaces(canvas).withFaceLandmarks().withFaceDescriptors()
+    const detections = await faceapi.detectAllFaces(canvas,new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceDescriptors()
     const displaySize = { width: canvas.width, height: canvas.height }
     const resizedDetections = faceapi.resizeResults(detections, displaySize)
     const results = resizedDetections.map(d => faceMatcher.findBestMatch(d.descriptor))
@@ -51,7 +53,7 @@ async function start() {
 }
 
 async function loadLabeledImages() {
-  const labels = ['Aditazar Ponce', 'Black Widow', 'Captain America', 'Captain Marvel', 'Fazur', 'Hawkeye', 'Jim Rhodes', 'Thor', 'Tony Stark']
+  const labels = ['Aditazar Ponce','Black Widow','Captain America','Captain Marvel','Chris Cornell','Fazur','Hawkeye','Jim Rhodes','Maria del Carmen Suarez Trejo', 'Rector' , 'Synyster Gates','Thor','Tony Stark','Wes Borland']
   return Promise.all(
     labels.map(async label => {
       const descriptions = []
