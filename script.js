@@ -8,11 +8,11 @@ const imgThumb = document.querySelector("#imgThumb")
 btnCheck.disabled = true
 btnCheck.value = "Cargando..."
 Promise.all([
-  faceapi.nets.faceRecognitionNet.loadFromUri('/models'),
-  faceapi.nets.faceLandmark68Net.loadFromUri('/models'),
-  faceapi.nets.ssdMobilenetv1.loadFromUri('/models'),
-  faceapi.nets.tinyFaceDetector.loadFromUri('/models'),
-  faceapi.nets.faceExpressionNet.loadFromUri('/models')
+  faceapi.nets.faceRecognitionNet.loadFromUri('/logface/models'),
+  faceapi.nets.faceLandmark68Net.loadFromUri('/logface/models'),
+  faceapi.nets.ssdMobilenetv1.loadFromUri('/logface/models'),
+  faceapi.nets.tinyFaceDetector.loadFromUri('/logface/models'),
+  faceapi.nets.faceExpressionNet.loadFromUri('/logface/models')
 ]).then(start)
 
 
