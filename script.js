@@ -23,8 +23,7 @@ async function start() {
   const labeledFaceDescriptors = await loadLabeledImages()
   const faceMatcher = new faceapi.FaceMatcher(labeledFaceDescriptors, 0.6)
   let canvas
-  btnCheck.disabled = false
-  btnCheck.value = "Check"
+  
   btnCheck.addEventListener('click', async () => {
     canvas = faceapi.createCanvasFromMedia(document.querySelector("#video"))
     const detections = await faceapi.detectAllFaces(canvas,new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceDescriptors()
@@ -49,11 +48,13 @@ async function start() {
       window.speechSynthesis.speak(speech)
     }
   })
+  btnCheck.disabled = false
+  btnCheck.value = "Check"
 
 }
 
 async function loadLabeledImages() {
-  const labels = ['Aditazar Ponce','Black Widow','Captain America','Captain Marvel','Chris Cornell','Fazur','Hawkeye','Jim Rhodes','Maria del Carmen Suarez Trejo', 'Rector' , 'Synyster Gates','Thor','Tony Stark','Wes Borland']
+  const labels = ['Aditazar Ponce','Black Widow','Captain America','Captain Marvel','Chris Cornell','Elizabeth','Fazur','Hawkeye','Jim Rhodes','Maria del Carmen Suarez Trejo', 'Rector' ,'Serj Tankian', 'Synyster Gates','Thor','Tobias Forge','Tony Stark','Wes Borland']
   return Promise.all(
     labels.map(async label => {
       const descriptions = []
