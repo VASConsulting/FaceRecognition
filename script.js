@@ -11,8 +11,6 @@ Promise.all([
   faceapi.nets.faceRecognitionNet.loadFromUri('/logface/models'),
   faceapi.nets.faceLandmark68Net.loadFromUri('/logface/models'),
   faceapi.nets.ssdMobilenetv1.loadFromUri('/logface/models'),
-  faceapi.nets.tinyFaceDetector.loadFromUri('/logface/models'),
-  faceapi.nets.faceExpressionNet.loadFromUri('/logface/models')
 ]).then(start)
 
 
@@ -26,7 +24,7 @@ async function start() {
   
   btnCheck.addEventListener('click', async () => {
     canvas = faceapi.createCanvasFromMedia(document.querySelector("#video"))
-    const detections = await faceapi.detectAllFaces(canvas,new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceDescriptors()
+    const detections = await faceapi.detectAllFaces(canvas).withFaceLandmarks().withFaceDescriptors()
     const displaySize = { width: canvas.width, height: canvas.height }
     const resizedDetections = faceapi.resizeResults(detections, displaySize)
     const results = resizedDetections.map(d => faceMatcher.findBestMatch(d.descriptor))
