@@ -2,8 +2,14 @@ const btnCheck = document.querySelector('#btnCheck')
 const txtName = document.querySelector("#txtName")
 const txtUsername = document.querySelector("#txtUsername")
 const txtDescription = document.querySelector("#txtDescription")
+const txtEmpresa = document.querySelector("#txtEmpresa")
 const txtDate = document.querySelector("#txtDate")
 const imgThumb = document.querySelector("#imgThumb")
+const txtHour = document.querySelector("#txtHour")
+const lugar = document.querySelector("#lugar")
+const visita = document.querySelector("#visita")
+const destino = document.querySelector("#destino")
+const informacion = document.querySelector("#informacion")
 
 btnCheck.disabled = true
 btnCheck.value = "Cargando..."
@@ -21,8 +27,10 @@ async function start() {
   const labeledFaceDescriptors = await loadLabeledImages()
   const faceMatcher = new faceapi.FaceMatcher(labeledFaceDescriptors, 0.6)
   let canvas
-  
+
   btnCheck.addEventListener('click', async () => {
+    destino.innerHTML = "Destino"
+    informacion.innerHTML = "Informacion"
     canvas = faceapi.createCanvasFromMedia(document.querySelector("#video"))
     const detections = await faceapi.detectAllFaces(canvas).withFaceLandmarks().withFaceDescriptors()
     const displaySize = { width: canvas.width, height: canvas.height }
@@ -34,7 +42,12 @@ async function start() {
       txtName.innerHTML = results[0].label
       txtUsername.innerHTML = "@" + results[0].label
       txtDescription.innerHTML = "Empleado de sistemas"
-      txtDate.innerHTML = new Date()
+      txtEmpresa.innerHTML = "VAS Consulting"
+      txtDate.innerHTML = new Date().toLocaleDateString()
+      txtHour.innerHTML = await getHour()
+      lugar.innerHTML = "Oficina"
+      visita.innerHTML = "Gerente"
+      
       window.speechSynthesis.speak(speech)
     } else {
       speech.text = "Acceso denegado"
@@ -42,7 +55,10 @@ async function start() {
       txtName.innerHTML = "Desconocido"
       txtUsername.innerHTML = "@desconocido"
       txtDescription.innerHTML = "Acceso denegado"
+      txtEmpresa.innerHTML = ""
       txtDate.innerHTML = ""
+      lugar.innerHTML = ""
+      visita.innerHTML = ""
       window.speechSynthesis.speak(speech)
     }
   })
@@ -52,7 +68,7 @@ async function start() {
 }
 
 async function loadLabeledImages() {
-  const labels = ['Aditazar Ponce','Black Widow','Captain America','Captain Marvel','Chris Cornell','Elizabeth','Fazur','Hawkeye','Jim Rhodes','Maria del Carmen Suarez Trejo', 'Rector' ,'Serj Tankian', 'Synyster Gates','Thor','Tobias Forge','Tony Stark','Wes Borland']
+  const labels = ['Aditazar Ponce', 'Black Widow', 'Captain America', 'Captain Marvel', 'Chris Cornell', 'Elizabeth', 'Fazur', 'Hawkeye', 'Jim Rhodes', 'Maria del Carmen Suarez Trejo', 'Rector', 'Serj Tankian', 'Synyster Gates', 'Thor', 'Tobias Forge', 'Tony Stark', 'Wes Borland']
   return Promise.all(
     labels.map(async label => {
       const descriptions = []
@@ -65,4 +81,14 @@ async function loadLabeledImages() {
       return new faceapi.LabeledFaceDescriptors(label, descriptions)
     })
   )
+}
+
+console.log(getHour())
+
+async function getHour() {
+  let hora = new Date().getHours()
+  let minutos = new Date().getMinutes() < 10 ? "0"+minutos : new Date().getMinutes()
+
+  let horaActual = hora + ":" + minutos
+  return horaActual
 }
