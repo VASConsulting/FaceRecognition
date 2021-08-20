@@ -6,17 +6,14 @@ const txtEmpresa = document.querySelector("#txtEmpresa")
 const txtDate = document.querySelector("#txtDate")
 const imgThumb = document.querySelector("#imgThumb")
 const txtHour = document.querySelector("#txtHour")
-const lugar = document.querySelector("#lugar")
-const visita = document.querySelector("#visita")
-const destino = document.querySelector("#destino")
 const informacion = document.querySelector("#informacion")
 
 btnCheck.disabled = true
 btnCheck.value = "Cargando..."
 Promise.all([
-  faceapi.nets.faceRecognitionNet.loadFromUri('/logface/models'),
-  faceapi.nets.faceLandmark68Net.loadFromUri('/logface/models'),
-  faceapi.nets.ssdMobilenetv1.loadFromUri('/logface/models'),
+  faceapi.nets.faceRecognitionNet.loadFromUri('/models'),
+  faceapi.nets.faceLandmark68Net.loadFromUri('/models'),
+  faceapi.nets.ssdMobilenetv1.loadFromUri('/models'),
 ]).then(start)
 
 
@@ -29,7 +26,6 @@ async function start() {
   let canvas
 
   btnCheck.addEventListener('click', async () => {
-    destino.innerHTML = "Destino"
     informacion.innerHTML = "Informacion"
     canvas = faceapi.createCanvasFromMedia(document.querySelector("#video"))
     const detections = await faceapi.detectAllFaces(canvas).withFaceLandmarks().withFaceDescriptors()
@@ -45,8 +41,6 @@ async function start() {
       txtEmpresa.innerHTML = "VAS Consulting"
       txtDate.innerHTML = new Date().toLocaleDateString()
       txtHour.innerHTML = await getHour()
-      lugar.innerHTML = "Oficina"
-      visita.innerHTML = "Gerente"
       
       window.speechSynthesis.speak(speech)
     } else {
@@ -57,8 +51,6 @@ async function start() {
       txtDescription.innerHTML = "Acceso denegado"
       txtEmpresa.innerHTML = ""
       txtDate.innerHTML = ""
-      lugar.innerHTML = ""
-      visita.innerHTML = ""
       window.speechSynthesis.speak(speech)
     }
   })
